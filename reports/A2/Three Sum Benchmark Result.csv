@@ -1,0 +1,24 @@
+﻿Three Sum Benchmark Result,,,,
+N,,Quadratic,Quadrithmic,Cubic
+250,Raw Time,0,0,3
+,Nomalized,0,0,0.19
+500,Raw Time,1,2,21
+,Nomalized,4,0.89,0.17
+1000,Raw Time,4,12,174
+,Nomalized,4,1.2,0.17
+2000,Raw Time,13,53,1307
+,Nomalized,3.25,1.23,0.16
+4000,Raw Time,57,278,10211
+,Nomalized,3.56,1.45,0.16
+8000,Raw Time,249,1240,
+,Nomalized,3.89,1.49,
+16000,Raw Time,1063,5602,
+,Nomalized,4.16,1.57,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
