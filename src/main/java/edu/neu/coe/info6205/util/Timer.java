@@ -194,6 +194,7 @@ public class Timer {
 
 
     // NOTE: HERE!
+
     /**
      * Get the number of ticks from the system clock.
      * <p>
@@ -210,6 +211,7 @@ public class Timer {
     }
 
     // NOTE: HERE!
+
     /**
      * NOTE: (Maintain consistency) There are two system methods for getting the clock time.
      * Ensure that this method is consistent with getTicks.

@@ -4,6 +4,9 @@
 
 package edu.neu.coe.info6205.util;
 
+import edu.neu.coe.info6205.sort.elementary.InsertionSort;
+
+import java.util.Random;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -125,4 +128,79 @@ public class Benchmark_Timer<T> implements Benchmark<T> {
     private final Consumer<T> fPost;
 
     final static LazyLogger logger = new LazyLogger(Benchmark_Timer.class);
+
+    public static void main(String[] args) {
+        int m = 30;
+        int size = 2000;
+        Random rand = new Random();
+
+        // Repeat 4 times
+        for (int loop = 0; loop < 4; loop++) {
+            int inputSize = size;
+            InsertionSort<Integer> sort = new InsertionSort<>();
+            Consumer<Integer[]> comsumer = (array) -> {
+                sort.sort(array, 0, array.length);
+            };
+            Benchmark_Timer<Integer[]> bmTimer = new Benchmark_Timer<>(
+                    "Benchmark insertion sort: array size " + inputSize,
+                    comsumer
+            );
+
+            // Random supplier
+            Supplier<Integer[]> randomSuppliser = () -> {
+                Integer[] nums = new Integer[inputSize];
+                for (int i = 0; i < inputSize; i++) {
+                    nums[i] = rand.nextInt();
+                }
+                return nums;
+            };
+
+            // Order supplier
+            Supplier<Integer[]> orderedSuppliser = () -> {
+                Integer[] nums = new Integer[inputSize];
+                for (int i = 0; i < inputSize; i++) {
+                    nums[i] = i;
+                }
+                return nums;
+            };
+
+            // Partially ordered supplier
+            Supplier<Integer[]> partiallyOrderedSuppliser = () -> {
+                Integer[] nums = new Integer[inputSize];
+                // half ordered
+                for (int i = 0; i < inputSize / 2; i++) {
+                    nums[i] = i;
+                }
+                // half random
+                for (int i = inputSize / 2; i < inputSize; i++) {
+                    nums[i] = rand.nextInt();
+                }
+                return nums;
+            };
+
+            // Reverse ordered supplier
+            Supplier<Integer[]> reverseOrderedSuppliser = () -> {
+                Integer[] nums = new Integer[inputSize];
+                int cur = rand.nextInt();
+                for (int i = 0; i < inputSize; i++) {
+                    nums[i] = inputSize - i;
+                }
+                return nums;
+            };
+
+            double randomTime = bmTimer.runFromSupplier(randomSuppliser, m);
+            double orderTime = bmTimer.runFromSupplier(orderedSuppliser, m);
+            double partiallyTime = bmTimer.runFromSupplier(partiallyOrderedSuppliser, m);
+            double reverseTime = bmTimer.runFromSupplier(reverseOrderedSuppliser, m);
+            System.out.println("-".repeat(25) + "Loop " + (loop + 1) + "-".repeat(25));
+            System.out.println("Sort Numbers Size: " + inputSize);
+            System.out.println("Sorted Number Mean Time: " + orderTime);
+            System.out.println("Partially Ordered Number Mean Time: " + partiallyTime);
+            System.out.println("Random Number Mean Time: " + randomTime);
+            System.out.println("Reverse Ordered Number Mean Time: " + reverseTime);
+
+            size *= 2;
+        }
+
+    }
 }
