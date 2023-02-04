@@ -62,7 +62,7 @@ public class Timer {
         logger.trace("repeat: with " + n + " runs");
         // FIXME: note that the timer is running when this method is called and should still be running when it returns. by replacing the following code
         ArrayList<T> list = new ArrayList<>();
-        // Get the Test values
+        // Create the list of the supplied sources
         for (int i = 0; i < n; i++) {
             T t = supplier.get();
             if (preFunction != null) {
@@ -71,6 +71,7 @@ public class Timer {
                 list.add(t);
             }
         }
+        // Run n times
         for (T supply : list) {
             U result;
             resume();
