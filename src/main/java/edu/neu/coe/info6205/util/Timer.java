@@ -1,5 +1,8 @@
 package edu.neu.coe.info6205.util;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -55,9 +58,30 @@ public class Timer {
      * @return the average milliseconds per repetition.
      */
     public <T, U> double repeat(int n, Supplier<T> supplier, Function<T, U> function, UnaryOperator<T> preFunction, Consumer<U> postFunction) {
+        pause();
         logger.trace("repeat: with " + n + " runs");
         // FIXME: note that the timer is running when this method is called and should still be running when it returns. by replacing the following code
-         return 0;
+        ArrayList<T> list = new ArrayList<>();
+        // Get the Test values
+        for (int i = 0; i < n; i++) {
+            T t = supplier.get();
+            if (preFunction != null) {
+                list.add(preFunction.apply(t));
+            } else {
+                list.add(t);
+            }
+        }
+        for (T supply : list) {
+            U result;
+            resume();
+            result = function.apply(supply);
+            pauseAndLap();
+            if (postFunction != null) {
+                postFunction.accept(result);
+            }
+        }
+
+        return meanLapTime();
         // END 
     }
 
@@ -167,6 +191,8 @@ public class Timer {
         return running;
     }
 
+
+    // NOTE: HERE!
     /**
      * Get the number of ticks from the system clock.
      * <p>
@@ -177,10 +203,12 @@ public class Timer {
      */
     private static long getClock() {
         // FIXME by replacing the following code
-         return 0;
+        // Return the current time in nano second
+        return System.nanoTime();
         // END 
     }
 
+    // NOTE: HERE!
     /**
      * NOTE: (Maintain consistency) There are two system methods for getting the clock time.
      * Ensure that this method is consistent with getTicks.
@@ -190,8 +218,9 @@ public class Timer {
      */
     private static double toMillisecs(long ticks) {
         // FIXME by replacing the following code
-         return 0;
-        // END 
+        // Convert nano to milli
+        return TimeUnit.NANOSECONDS.toMillis(ticks);
+        // END
     }
 
     final static LazyLogger logger = new LazyLogger(Timer.class);
