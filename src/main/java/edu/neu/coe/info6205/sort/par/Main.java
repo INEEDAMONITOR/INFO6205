@@ -90,7 +90,7 @@ public class Main {
             BufferedWriter bw = new BufferedWriter(isr);
             int j = 0;
             for (long i : timeList) {
-                String content = threads +" "+ 10000 * (j + 1) + " " + i + "\n";
+                String content = threads +" "+ 20000 * (j + 1) + " " + i + "\n";
                 j++;
                 bw.write(content);
                 bw.flush();
