@@ -1,0 +1,2 @@
+- Seperate the config with the code. Set it in to `.env`
+-  
