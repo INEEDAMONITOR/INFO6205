@@ -4,6 +4,7 @@
 
 package edu.neu.coe.info6205.sort.linearithmic;
 
+import com.google.common.collect.Lists;
 import edu.neu.coe.info6205.sort.*;
 import edu.neu.coe.info6205.sort.elementary.InsertionSort;
 import edu.neu.coe.info6205.util.Config;
@@ -364,6 +365,8 @@ public class MergeSortTest {
         Helper<Integer> helper = sorter.getHelper();
         Integer[] ints = helper.random(Integer.class, r -> r.nextInt(1000));
         Integer[] sorted = sorter.sort(ints);
+        System.out.println(Arrays.toString(ints));
+        System.out.println(Arrays.toString(sorted));
         assertTrue(helper.sorted(sorted));
     }
 

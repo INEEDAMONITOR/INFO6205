@@ -39,7 +39,7 @@ public class SortBenchmarkHelper {
     // TEST
     public static String[] getWords(String resource, Function<String, Collection<String>> getStrings) throws FileNotFoundException {
         List<String> words = new ArrayList<>();
-        final FileReader fr = new FileReader(getFile(resource, SortBenchmarkHelper.class));
+        final FileReader fr = new FileReader(getFile(resource, SortBenchmarkHelper.class).replace("%20", " "));
         for (Object line : new BufferedReader(fr).lines().toArray()) words.addAll(getStrings.apply((String) line));
         words = words.stream().distinct().filter(new Predicate<String>() {
             private static final int MINIMUM_LENGTH = 2;
